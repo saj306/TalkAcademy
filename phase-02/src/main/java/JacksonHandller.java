@@ -9,12 +9,14 @@ import java.util.ArrayList;
 
 public class JacksonHandller {
 
+    private final static String jsonAddress = "src/main/resources/EmployeeData.json";
+    private final static String xmlAddress = "src/main/resources/EmployeeInformation.xml";
+
     public static void importDataFromJasonFile() {
         ArrayList<Employee> employees = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            employees = objectMapper.readValue(new File("src/main/resources/EmployeeData.json"), new TypeReference<ArrayList<Employee>>() {
-            });
+            employees = objectMapper.readValue(new File("src/main/resources/EmployeeData.json"), new TypeReference<ArrayList<Employee>>(){});
             Employee.setEmployees(employees);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -22,7 +24,6 @@ public class JacksonHandller {
     }
 
     public static void exportDataToXmlFile() {
-
         XmlMapper xmlMapper = new XmlMapper();
         try {
             xmlMapper.writeValue(new File("src/main/resources/EmployeeInformation.xml"), Employee.getEmployees());
@@ -30,5 +31,8 @@ public class JacksonHandller {
             throw new RuntimeException(e);
         }
 
+    }
+    private static File makeFile(String address){
+        return new File(address);
     }
 }
